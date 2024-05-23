@@ -1,8 +1,5 @@
 "use strict";
 
-const $loginForm = $("#login-form");
-const $signupForm = $("#signup-form");
-
 // global to hold the User instance of the currently-logged-in user
 let currentUser;
 
