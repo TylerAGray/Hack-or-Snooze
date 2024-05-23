@@ -4,6 +4,8 @@
  * User
  */
 
+const BASE_URL = "https://hack-or-snooze-v3.herokuapp.com";
+
 class User {
   /** set up a new user */
 
