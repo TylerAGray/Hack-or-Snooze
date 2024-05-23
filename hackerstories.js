@@ -1,7 +1,5 @@
 "use strict";
 
-const $ownStories = $("#my-stories");
-
 // This is the global list of the stories, an instance of StoryList
 let storyList;
 
