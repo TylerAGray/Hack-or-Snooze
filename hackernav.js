@@ -1,40 +1,94 @@
+// Using strict mode for better error handling
 "use strict";
 
-// global to hold the User instance of the logged-in user
-let currentUser;
+/******************************************************************************
+ * Handling navbar clicks and updating navbar
+ */
 
-const $navLogOut = $("#nav-logout");
-const $submitForm = $("#submit-form");
-const $allStoriesList = $("#all-stories-list");
-const $storiesLoadingMsg = $("#stories-loading-msg");
-const $storiesContainer = $(".stories-container");
-
-/** Show main list of all stories when click site name */
-
-function navAllStories(evt) {
-  console.debug("navAllStories", evt);
+/** Function to display the main list of all stories when clicking on the site name */
+function handleNavAllStoriesClick(evt) {
+  console.debug("Clicked on All Stories", evt);
+  // Hiding all page components
   hidePageComponents();
+  // Displaying all stories on the page
   putStoriesOnPage();
 }
 
-$navAllStories.on("click", navAllStories);
+// Event listener for clicking on the site name
+$body.on("click", "#nav-all", handleNavAllStoriesClick);
 
-/** Show login/signup on click on "login" */
-
-function navLoginClick(evt) {
-  console.debug("navLoginClick", evt);
+/** Function to show the story submission form when clicking on "submit a story" */
+function handleNavSubmitStoryClick(evt) {
+  console.debug("Clicked on Submit Story", evt);
+  // Hiding all page components except the list of all stories and the story submission form
   hidePageComponents();
-  $loginForm.slideToggle();
-  $signupForm.slideToggle();
+  $allStoriesList.show();
+  $submitForm.show();
 }
 
-$navLogin.on("click", navLoginClick);
+// Event listener for clicking on "submit a story"
+$navSubmitStory.on("click", handleNavSubmitStoryClick);
 
-/** When user first logins, update the navbar to reflect that. */
+/** Function to show favorite stories when clicking on "favorites" */
+function handleNavFavoritesClick(evt) {
+  console.debug("Clicked on Favorites", evt);
+  // Hiding all page components
+  hidePageComponents();
+  // Displaying the list of favorite stories on the page
+  putFavoritesListOnPage();
+}
 
+// Event listener for clicking on "favorites"
+$body.on("click", "#nav-favorites", handleNavFavoritesClick);
+
+/** Function to show user's own stories when clicking on "my stories" */
+function handleNavMyStoriesClick(evt) {
+  console.debug("Clicked on My Stories", evt);
+  // Hiding all page components
+  hidePageComponents();
+  // Displaying the user's own stories on the page
+  putUserStoriesOnPage();
+  $ownStories.show();
+}
+
+// Event listener for clicking on "my stories"
+$body.on("click", "#nav-my-stories", handleNavMyStoriesClick);
+
+/** Function to show login/signup forms when clicking on "login" */
+function handleNavLoginClick(evt) {
+  console.debug("Clicked on Login", evt);
+  // Hiding all page components except login/signup forms
+  hidePageComponents();
+  $loginForm.show();
+  $signupForm.show();
+  // Hiding the stories container
+  $storiesContainer.hide();
+}
+
+// Event listener for clicking on "login"
+$navLogin.on("click", handleNavLoginClick);
+
+/** Function to show user profile when clicking on "profile" */
+function handleNavProfileClick(evt) {
+  console.debug("Clicked on Profile", evt);
+  // Hiding all page components
+  hidePageComponents();
+  // Displaying the user profile on the page
+  $userProfile.show();
+}
+
+// Event listener for clicking on "profile"
+$navUserProfile.on("click", handleNavProfileClick);
+
+/** Function to update the navbar when a user logs in */
 function updateNavOnLogin() {
-  console.debug("updateNavOnLogin");
-  $(".main-nav-links").show();
+  console.debug("Updating Navbar on Login");
+  // Displaying main navigation links
+  $(".main-nav-links").css('display', 'flex');
+  // Hiding the login link
   $navLogin.hide();
+  // Showing the logout link
   $navLogOut.show();
+  // Showing the user's profile link with their username
+  $navUserProfile.text(`${currentUser.username}`).show();
 }
